@@ -66,11 +66,25 @@ def frame_processing(frame):
         print(list_ids)
 
         if list_ids[0] == 0:
+            index = np.where(ids == 0)[0][0]  # num_id が格納されているindexを抽出
+            cornerUL = corners[index][0][0]
+            cornerUR = corners[index][0][1]
+            cornerBR = corners[index][0][2]
+            cornerBL = corners[index][0][3]
+
+            center = [(cornerUL[0] + cornerBR[0]) / 2, (cornerUL[1] + cornerBR[1]) / 2]
+
+            print('左上 : {}'.format(cornerUL))
+            print('右上 : {}'.format(cornerUR))
+            print('右下 : {}'.format(cornerBR))
+            print('左下 : {}'.format(cornerBL))
+            print('中心 : {}'.format(center))
+            time.sleep(1)
             print("着陸体制に入ります！！")
             # test_landing(drone)
-            if list_ids[-1] == 4 and len(list_ids) == 5:
-                print("--------------------------着陸--------------------------")
-                target_found = True
+            # if list_ids[-1] == 4 and len(list_ids) == 5:
+            #     print("--------------------------着陸--------------------------")
+            #     target_found = True
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
             pass
