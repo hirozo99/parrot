@@ -5,7 +5,7 @@ from cv2 import aruco
 import os
 import numpy as np
 
-
+import olympe
 from olympe.video.pdraw import Pdraw, PdrawState
 from olympe.video.renderer import PdrawRenderer
 
