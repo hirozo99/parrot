@@ -1,17 +1,21 @@
-import time
 import cv2
 from cv2 import aruco
 
+import olympe
+from olympe.messages.ardrone3.Piloting import TakeOff, Landing, moveBy
+from olympe.messages.ardrone3.PilotingState import FlyingStateChanged
+from olympe.messages.move import extended_move_by
+import time
 import os
 import numpy as np
-
-import olympe
 from olympe.video.pdraw import Pdraw, PdrawState
 from olympe.video.renderer import PdrawRenderer
 
 RTSP_URL = 'rtsp://192.168.42.1/live'
 os.environ['OPENCV_FFMPEG_CAPTURE_OPTIONS'] = 'rtsp_transport;udp'
+
 DRONE_IP = os.environ.get("DRONE_IP", "192.168.42.1")
+
 ### --- aruco設定 --- ###
 dict_aruco = aruco.Dictionary_get(aruco.DICT_4X4_50)
 parameters = aruco.DetectorParameters_create()
@@ -23,7 +27,7 @@ start_processing = False
 def test_takeoff(drone):
     print("--------------------test_takeoff--------------------")
     assert drone(TakeOff()).wait().success()
-    time.sleep(5)
+    time.sleep(3)
 
 
 def go(distance):
@@ -66,24 +70,11 @@ def frame_processing(frame):
         print(list_ids)
 
         if list_ids[0] == 0:
-            index = np.where(ids == 0)[0][0]  # num_id が格納されているindexを抽出
-            cornerUL = corners[index][0][0]
-            cornerUR = corners[index][0][1]
-            cornerBR = corners[index][0][2]
-            cornerBL = corners[index][0][3]
-
-            center = [(cornerUL[0] + cornerBR[0]) / 2, (cornerUL[1] + cornerBR[1]) / 2]
-
-            print('左上 : {}'.format(cornerUL))
-            print('右上 : {}'.format(cornerUR))
-            print('右下 : {}'.format(cornerBR))
-            print('左下 : {}'.format(cornerBL))
-            print('中心 : {}'.format(center))
-            print("=================================landing===============================")
+            print("着陸体制に入ります！！")
             # test_landing(drone)
-            # if list_ids[-1] == 4 and len(list_ids) == 5:
-            #     print("--------------------------着陸--------------------------")
-            #     target_found = True
+            if list_ids[-1] == 4 and len(list_ids) == 5:
+                print("--------------------------着陸--------------------------")
+                target_found = True
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
             pass
@@ -106,11 +97,18 @@ if __name__ == '__main__':
     assert pdraw.wait(PdrawState.Playing, timeout=5)
     print('doe initialize')
 
+    test_takeoff(drone)
+    time.sleep(1)
+    test_move(drone, 0, 2)
+    time.sleep(1)
     start_processing = True
     try:
         while True:
             if target_found:
                 start_processing = False
+                test_move(drone, 1, 0)
+                time.sleep(1)
+                test_landing(drone)
                 break
     except Exception as e:
         print(e)
