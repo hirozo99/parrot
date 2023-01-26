@@ -79,8 +79,7 @@ def frame_processing(frame):
             print('右下 : {}'.format(cornerBR))
             print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
-            time.sleep(1)
-            print("着陸体制に入ります！！")
+            print("=================================landing===============================")
             # test_landing(drone)
             # if list_ids[-1] == 4 and len(list_ids) == 5:
             #     print("--------------------------着陸--------------------------")

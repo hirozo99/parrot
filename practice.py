@@ -108,7 +108,7 @@ if __name__ == '__main__':
                 start_processing = False
                 test_move(drone, 1, 0)
                 time.sleep(1)
-                test_landing()
+                test_landing(drone)
                 break
     except Exception as e:
         print(e)
