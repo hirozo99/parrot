@@ -97,7 +97,10 @@ def frame_processing(frame):
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
             # test_landing(drone)
-            if 0 <= center[1] <= 550:
+            if 0 <= center[1] <= 700:
+                print("*********************************************************************")
+                print("*********************************landing*****************************")
+                print("*********************************************************************")
                 target_found = True
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
