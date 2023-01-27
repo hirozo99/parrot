@@ -77,8 +77,7 @@ def frame_processing(frame):
         list_ids = list(np.ravel(ids))
         list_ids.sort()
         print(list_ids)
-        forward(drone, 0.3)
-        time.sleep(0.5)
+        forward(drone, 0.4)
         if list_ids[0] == 0:
             print("*********************************************************************")
             print("***************************landing posture***************************")
@@ -97,7 +96,7 @@ def frame_processing(frame):
             # print('右下 : {}'.format(cornerBR))
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
-            if 0 <= center[1] <= 700:
+            if 100 <= center[1] <= 700:
                 print("*********************************************************************")
                 print("*********************************landing*****************************")
                 print("*********************************************************************")
