@@ -80,7 +80,7 @@ def frame_processing(frame):
         list_ids.sort()
         print(list_ids)
 
-        # マーカーが見つかるまで前進
+        # マーカーが見つかるまで前進する
         forward(drone, 0.4)
         time.sleep(0.05)
         if list_ids[0] == 0:
