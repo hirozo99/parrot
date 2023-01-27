@@ -97,8 +97,7 @@ def frame_processing(frame):
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
             # test_landing(drone)
-            if list_ids[-1] == 4 and len(list_ids) == 5:
-                print("--------------------------着陸--------------------------")
+            if 0 <= center[1] <= 550:
                 target_found = True
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
@@ -131,7 +130,8 @@ if __name__ == '__main__':
         while True:
             if target_found:
                 start_processing = False
-                go(drone, 1)
+                time.sleep(1)
+                go(drone, 2)
                 time.sleep(1)
                 landing(drone)
                 break
