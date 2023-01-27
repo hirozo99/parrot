@@ -89,7 +89,7 @@ def frame_processing(frame):
             cornerBR = corners[index][0][2]
             cornerBL = corners[index][0][3]
 
-            center = [(cornerUL[0] + cornerBR[0]) / 2, (cornerUL[1] + cornerBR[1]) / 2]
+            center = [(cornerUL[0] + cornerBR[0]) / 2, (cornerUL[1] + cornerBR[1]) / 2] # マーカー中心の計算
 
             # print('左上 : {}'.format(cornerUL))
             # print('右上 : {}'.format(cornerUR))
