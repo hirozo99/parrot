@@ -101,7 +101,7 @@ def frame_processing(frame):
             # print('右下 : {}'.format(cornerBR))
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
-            if 150 <= center[1] <= 700:
+            if 400 <= center[1] <= 700:
                 print("*********************************************************************")
                 print("*********************************landing*****************************")
                 print("*********************************************************************")
@@ -142,7 +142,7 @@ if __name__ == '__main__':
             if target_found:
                 start_processing = False
                 time.sleep(1)
-                go(drone, 2.2)
+                go(drone, 2)
                 time.sleep(1)
                 landing(drone)
                 break
