@@ -24,7 +24,7 @@ parameters = aruco.DetectorParameters_create()
 target_found = False
 start_processing = False
 
-# 法政大学小金井キャンパスの中庭、白い四角タイルの角の緯度経度
+# 法政大学小金井キャンパスの中庭、白い四角タイルの角
 agri_latitude = 35.709750
 agri_longitude = 139.523336
 
@@ -50,12 +50,11 @@ def forward(drone, F):
         extended_move_by(F, 0, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
 
-# GPSを用いて目的地まで移動
+# GPSを用いて目的地まで毎秒0.7mで移動
 def moveto(drone, latitude, longitude):
     print("------------------------------moveto------------------------------")
     assert drone(
-        extended_move_to(
-            latitude, longitude, 0, olympe.enums.move.orientation_mode, 0.7, 0.7, 0.7)
+        extended_move_to(latitude, longitude, 0, olympe.enums.move.orientation_mode, 0.0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
 
@@ -148,7 +147,7 @@ if __name__ == '__main__':
     time.sleep(1)
     gain_altitude(drone, 4)
     time.sleep(1)
-    go(drone, 5)
+    moveto(drone, agri_latitude, agri_longitude)
     time.sleep(5)
     start_processing = True
     try:
