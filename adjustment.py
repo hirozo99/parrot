@@ -47,7 +47,7 @@ def forward(drone, F):
 
 # 毎秒0.2mでFm前進
 def adjustment(drone, X):
-    print("------------------------------forward------------------------------")
+    print("------------------------------adjustment------------------------------")
     assert drone(
         extended_move_by(0, X, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
@@ -108,19 +108,20 @@ def frame_processing(frame):
             # print('右下 : {}'.format(cornerBR))
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
-            if center[1] >= 400:
-                print("*********************************************************************")
-                print("*********************************landing*****************************")
-                print("*********************************************************************")
-                # 横方向微調整
-                while True:
-                    if center[0] < 600:
-                        adjustment(drone, -0.1)
-                    elif center[0] > 800:
-                        adjustment(0.1)
-                    else:
+            # 横方向微調整
+            while True:
+                if center[0] < 580:
+                    adjustment(drone, -0.1)
+                elif center[0] > 620:
+                    adjustment(drone, 0.1)
+                else:
+                    if center[1] >= 400:
+                        print("*********************************************************************")
+                        print("*********************************landing*****************************")
+                        print("*********************************************************************")
                         target_found = True
                         break
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
             pass
