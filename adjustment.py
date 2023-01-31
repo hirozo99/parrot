@@ -111,10 +111,10 @@ def frame_processing(frame):
             # 横方向微調整
             while True:
                 if center[0] < 580:
-                    adjustment(drone, -0.1)
+                    adjustment(drone, -0.2)
                     time.sleep(2)
                 elif center[0] > 620:
-                    adjustment(drone, 0.1)
+                    adjustment(drone, 0.2)
                     time.sleep(2)
                 else:
                     if center[1] >= 400:
