@@ -28,7 +28,6 @@ start_processing = False
 agri_latitude = 35.709750
 agri_longitude = 139.523336
 
-
 # 離陸
 def takeoff(drone):
     print("------------------------------takeoff------------------------------")
@@ -37,7 +36,7 @@ def takeoff(drone):
 
 # 毎秒0.7mでFm前進後、3秒ポーズ
 def go(drone, F):
-    print("------------------------------forward------------------------------")
+    print("------------------------------go------------------------------")
     assert drone(
         extended_move_by(F, 0, 0, 0, 0.7, 0.7, 0.7)
     ).wait().success()
@@ -50,19 +49,32 @@ def forward(drone, F):
         extended_move_by(F, 0, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
 
+# 毎秒0.2mでFm前進
+def adjustment_right(drone, X):
+    print("------------------------------adjustment_right------------------------------")
+    assert drone(
+        extended_move_by(0, -X, 0, 0, 0.2, 0.2, 0.2)
+    ).wait().success()
+
+def adjustment_left(drone, X):
+    print("------------------------------adjustment_left------------------------------")
+    assert drone(
+        extended_move_by(0, X, 0, 0, 0.2, 0.2, 0.2)
+    ).wait().success()
+
+# 毎秒0.7mでHm高度上昇
+def gain_altitude(drone, H):
+    print("------------------------------gain_altitude------------------------------")
+    drone(
+        extended_move_by(0, 0, -H, 0, 0.7, 0.7, 0.7)
+    ).wait().success()
+    time.sleep(3)
+
 # GPSを用いて目的地まで毎秒0.7mで移動
 def moveto(drone, latitude, longitude):
     print("------------------------------moveto------------------------------")
     assert drone(
         extended_move_to(latitude, longitude, 0, olympe.enums.move.orientation_mode, 0.0, 0.7, 0.7, 0.7)
-    ).wait().success()
-    time.sleep(3)
-
-# 毎秒0.7mでHm高度上昇
-def gain_altitude(drone, H):
-    print("------------------------------gain_altitude------------------------------")
-    assert drone(
-        extended_move_by(0, 0, -H, 0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
 
@@ -93,7 +105,7 @@ def frame_processing(frame):
         list_ids.sort()
         print(list_ids)
 
-        # マーカーが見つかるまで前進する
+        # マーカーが見つかるまで前進
         forward(drone, 0.4)
         time.sleep(0.05)
         if list_ids[0] == 0:
@@ -114,11 +126,21 @@ def frame_processing(frame):
             # print('右下 : {}'.format(cornerBR))
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
-            if center[1] >= 400:
+
+            if center[1] >= 400 and 570 < center[0] < 630:
                 print("*********************************************************************")
                 print("*********************************landing*****************************")
                 print("*********************************************************************")
                 target_found = True
+            # 横方向微調整
+            elif center[0] < 580:
+                adjustment_right(drone, 0.2)
+                time.sleep(2)
+            elif center[0] > 620:
+                adjustment_left(drone, 0.2)
+                time.sleep(2)
+
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
             pass
@@ -145,17 +167,17 @@ if __name__ == '__main__':
 
     takeoff(drone)
     time.sleep(1)
-    gain_altitude(drone, 3)
+    gain_altitude(drone, 2)
     time.sleep(1)
-    moveto(drone, agri_latitude, agri_longitude)
-    time.sleep(10)
+    go(drone, 5)
+    time.sleep(5)
     start_processing = True
     try:
         while True:
             if target_found:
                 start_processing = False
                 time.sleep(1)
-                go(drone, 1.3)
+                go(drone, 1.5)
                 time.sleep(1)
                 landing(drone)
                 break
