@@ -109,20 +109,18 @@ def frame_processing(frame):
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
             # 横方向微調整
-            while True:
-                if center[0] < 580:
-                    adjustment(drone, -0.2)
-                    time.sleep(2)
-                elif center[0] > 620:
-                    adjustment(drone, 0.2)
-                    time.sleep(2)
-                else:
-                    if center[1] >= 400:
-                        print("*********************************************************************")
-                        print("*********************************landing*****************************")
-                        print("*********************************************************************")
-                        target_found = True
-                        break
+            if center[0] < 580:
+                adjustment(drone, -0.2)
+                time.sleep(2)
+            elif center[0] > 620:
+                adjustment(drone, 0.2)
+                time.sleep(2)
+            else:
+                if center[1] >= 400:
+                    print("*********************************************************************")
+                    print("*********************************landing*****************************")
+                    print("*********************************************************************")
+                    target_found = True
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
