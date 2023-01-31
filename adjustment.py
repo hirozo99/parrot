@@ -138,12 +138,15 @@ def frame_processing(frame):
                 print("*********************************************************************")
                 print("*********************************landing*****************************")
                 print("*********************************************************************")
+                print('中心 : {}'.format(center))
                 target_found = True
             # 横方向微調整
             elif center[0] < 580:
+                print('中心 : {}'.format(center))
                 adjustment_right(drone, 0.2)
                 time.sleep(2)
             elif center[0] > 620:
+                print('中心 : {}'.format(center))
                 adjustment_left(drone, 0.2)
                 time.sleep(2)
 
