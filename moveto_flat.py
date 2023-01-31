@@ -169,8 +169,8 @@ if __name__ == '__main__':
     time.sleep(1)
     gain_altitude(drone, 2)
     time.sleep(1)
-    go(drone, 5)
-    time.sleep(5)
+    moveto(drone, agri_latitude, agri_longitude)
+    time.sleep(10)
     start_processing = True
     try:
         while True:
