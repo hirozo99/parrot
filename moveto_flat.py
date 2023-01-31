@@ -74,7 +74,7 @@ def gain_altitude(drone, H):
 def moveto(drone, latitude, longitude):
     print("------------------------------moveto------------------------------")
     assert drone(
-        extended_move_to(latitude, longitude, 0, olympe.enums.move.orientation_mode, 0.0, 0.7, 0.7, 0.7)
+        extended_move_to(latitude, longitude, 0, 0, 0.0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
 
