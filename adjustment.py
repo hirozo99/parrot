@@ -112,8 +112,10 @@ def frame_processing(frame):
             while True:
                 if center[0] < 580:
                     adjustment(drone, -0.1)
+                    time.sleep(2)
                 elif center[0] > 620:
                     adjustment(drone, 0.1)
+                    time.sleep(2)
                 else:
                     if center[1] >= 400:
                         print("*********************************************************************")
