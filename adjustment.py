@@ -165,7 +165,7 @@ if __name__ == '__main__':
             if target_found:
                 start_processing = False
                 time.sleep(1)
-                go(drone, 0.5)
+                go(drone, 1.5)
                 time.sleep(1)
                 landing(drone)
                 break
