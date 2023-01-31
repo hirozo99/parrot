@@ -46,8 +46,14 @@ def forward(drone, F):
     ).wait().success()
 
 # 毎秒0.2mでFm前進
-def adjustment(drone, X):
-    print("------------------------------adjustment------------------------------")
+def adjustment_right(drone, X):
+    print("------------------------------adjustment_right------------------------------")
+    assert drone(
+        extended_move_by(0, -X, 0, 0, 0.2, 0.2, 0.2)
+    ).wait().success()
+
+def adjustment_left(drone, X):
+    print("------------------------------adjustment_left------------------------------")
     assert drone(
         extended_move_by(0, X, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
@@ -108,19 +114,20 @@ def frame_processing(frame):
             # print('右下 : {}'.format(cornerBR))
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
+
+            if center[1] >= 400 and 570 < center[0] < 630:
+                print("*********************************************************************")
+                print("*********************************landing*****************************")
+                print("*********************************************************************")
+                target_found = True
             # 横方向微調整
-            if center[0] < 580:
-                adjustment(drone, -0.2)
+            elif center[0] < 580:
+                adjustment_right(drone, 0.2)
                 time.sleep(2)
             elif center[0] > 620:
-                adjustment(drone, 0.2)
+                adjustment_left(drone, 0.2)
                 time.sleep(2)
-            else:
-                if center[1] >= 400:
-                    print("*********************************************************************")
-                    print("*********************************landing*****************************")
-                    print("*********************************************************************")
-                    target_found = True
+
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
