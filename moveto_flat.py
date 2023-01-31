@@ -73,8 +73,8 @@ def gain_altitude(drone, H):
 # GPSを用いて目的地まで毎秒0.7mで移動
 def moveto(drone, latitude, longitude):
     print("------------------------------moveto------------------------------")
-    assert drone(
-        extended_move_to(latitude, longitude, 0, 0, 0.0, 0.7, 0.7, 0.7)
+    drone(
+        extended_move_to(latitude, longitude, 3, 0, 0.0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
 
@@ -170,7 +170,7 @@ if __name__ == '__main__':
     gain_altitude(drone, 2)
     time.sleep(1)
     moveto(drone, agri_latitude, agri_longitude)
-    time.sleep(10)
+    time.sleep(3)
     start_processing = True
     try:
         while True:
