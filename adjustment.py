@@ -55,7 +55,7 @@ def adjustment(drone, X):
 # 毎秒0.7mでHm高度上昇
 def gain_altitude(drone, H):
     print("------------------------------gain_altitude------------------------------")
-    assert drone(
+    drone(
         extended_move_by(0, 0, -H, 0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
