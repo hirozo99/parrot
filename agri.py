@@ -1,3 +1,5 @@
+"""10m手前から農業用ロボットに着陸(縦方向のみ)"""
+
 import cv2
 from cv2 import aruco
 
