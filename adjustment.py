@@ -32,7 +32,7 @@ def takeoff(drone):
 
 # 毎秒0.7mでFm前進後、3秒ポーズ
 def go(drone, F):
-    print("------------------------------forward------------------------------")
+    print("------------------------------go------------------------------")
     assert drone(
         extended_move_by(F, 0, 0, 0, 0.7, 0.7, 0.7)
     ).wait().success()
@@ -43,6 +43,13 @@ def forward(drone, F):
     print("------------------------------forward------------------------------")
     assert drone(
         extended_move_by(F, 0, 0, 0, 0.2, 0.2, 0.2)
+    ).wait().success()
+
+# 毎秒0.2mでFm前進
+def adjustment(drone, X):
+    print("------------------------------forward------------------------------")
+    assert drone(
+        extended_move_by(0, X, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
 
 # 毎秒0.7mでHm高度上昇
@@ -105,7 +112,14 @@ def frame_processing(frame):
                 print("*********************************************************************")
                 print("*********************************landing*****************************")
                 print("*********************************************************************")
-                target_found = True
+                while True:
+                    if center[0] < 600:
+                        adjustment(drone, -0.1)
+                    elif center[0] > 800:
+                        adjustment(0.1)
+                    else:
+                        target_found = True
+                        break
         if cv2.waitKey(1) & 0xFF == ord('q'):
             # cap.release()
             pass

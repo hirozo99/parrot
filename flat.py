@@ -32,7 +32,7 @@ def takeoff(drone):
 
 # 毎秒0.7mでFm前進後、3秒ポーズ
 def go(drone, F):
-    print("------------------------------forward------------------------------")
+    print("------------------------------go------------------------------")
     assert drone(
         extended_move_by(F, 0, 0, 0, 0.7, 0.7, 0.7)
     ).wait().success()
