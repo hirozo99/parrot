@@ -6,7 +6,7 @@ from cv2 import aruco
 import olympe
 from olympe.messages.ardrone3.Piloting import TakeOff, Landing, moveBy
 from olympe.messages.ardrone3.PilotingState import FlyingStateChanged
-from olympe.messages.move import extended_move_by, extended_move_to
+from olympe.messages.move import extended_move_by
 import time
 import os
 import numpy as np
@@ -25,10 +25,6 @@ parameters = aruco.DetectorParameters_create()
 # 変数の設定
 target_found = False
 start_processing = False
-
-# 法政大学小金井キャンパスの中庭、白い四角タイルの角
-agri_latitude = 35.709750
-agri_longitude = 139.523336
 
 # 離陸
 def takeoff(drone):
@@ -84,16 +80,6 @@ def gain_altitude(drone, H):
 
     drone(
         extended_move_by(0, 0, -H, 0, 0.7, 0.7, 0.7)
-    ).wait().success()
-    time.sleep(3)
-
-# GPSを用いて目的地まで毎秒0.7mで移動
-def moveto(drone, latitude, longitude):
-    print("------------------------------------------------------------------")
-    print("------------------------------moveto------------------------------")
-    print("------------------------------------------------------------------")
-    drone(
-        extended_move_to(latitude, longitude, 4.0, 0, 0.0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
 
@@ -195,8 +181,8 @@ if __name__ == '__main__':
     time.sleep(1)
     gain_altitude(drone, 4)
     time.sleep(1)
-    moveto(drone, agri_latitude, agri_longitude)
-    time.sleep(20)
+    go(drone, 5)
+    time.sleep(5)
     start_processing = True
     try:
         while True:
