@@ -120,7 +120,7 @@ def frame_processing(frame):
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, dict_aruco, parameters=parameters)
         frame_markers = aruco.drawDetectedMarkers(frame.as_ndarray(), corners, ids)
         cv2.imshow('frame', frame_markers)
-
+        time.sleep(0.1)
         # idをリストで表示
         list_ids = list(np.ravel(ids))
         list_ids.sort()
@@ -141,29 +141,33 @@ def frame_processing(frame):
         #print('中心 : {}'.format(center))
 
         # マーカーが見つかるまで前進
-        if list_ids is None and center[1] < 400:
+        if list_ids is None:
             print("*********************************************************************")
             print("***************************landing_posture***************************")
             print("*********************************************************************")
             print('中心 : {}'.format(center))
             forward(drone, 0.3)
             time.sleep(2)
-
-        if center[1] >= 400 and 550 < center[0] < 650:
-            print("*********************************************************************")
-            print("*********************************landing*****************************")
-            print("*********************************************************************")
-            print('中心 : {}'.format(center))
-            target_found = True
-        # 横方向微調整
-        elif center[0] < 550:
-            print('中心 : {}'.format(center))
-            adjustment_left(drone, 0.2)
-            time.sleep(2)
-        elif center[0] > 650:
-            print('中心 : {}'.format(center))
-            adjustment_right(drone, 0.2)
-            time.sleep(2)
+        elif list_ids[0] == 0:
+            if center[1] < 400:
+                print('中心 : {}'.format(center))
+                forward(drone, 0.2)
+                time.sleep(2)
+            # 横方向微調整
+            elif center[0] < 550:
+                print('中心 : {}'.format(center))
+                adjustment_left(drone, 0.2)
+                time.sleep(2)
+            elif center[0] > 650:
+                print('中心 : {}'.format(center))
+                adjustment_right(drone, 0.2)
+                time.sleep(2)
+            else:
+                print('中心 : {}'.format(center))
+                print("*********************************************************************")
+                print("*********************************landing*****************************")
+                print("*********************************************************************")
+                target_found = True
 
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
