@@ -56,20 +56,21 @@ def forward(drone, F):
     assert drone(
         extended_move_by(F, 0, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
+    time.sleep(2)
 
 # 毎秒0.2mでXm右に移動
-def adjustment_right(drone, X):
+def adjustment_left(drone, X):
     print("----------------------------------------------------------------------------")
-    print("------------------------------adjustment_right------------------------------")
+    print("------------------------------adjustment_left------------------------------")
     print("----------------------------------------------------------------------------")
     assert drone(
         extended_move_by(0, -X, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
 
 # 毎秒0.2mでXm左に移動
-def adjustment_left(drone, X):
+def adjustment_right(drone, X):
     print("---------------------------------------------------------------------------")
-    print("------------------------------adjustment_left------------------------------")
+    print("------------------------------adjustment_right------------------------------")
     print("---------------------------------------------------------------------------")
 
     assert drone(
@@ -157,11 +158,11 @@ def frame_processing(frame):
             # 横方向微調整
             elif center[0] < 550:
                 print('中心 : {}'.format(center))
-                adjustment_right(drone, 0.2)
+                adjustment_left(drone, 0.2)
                 time.sleep(2)
             elif center[0] > 650:
                 print('中心 : {}'.format(center))
-                adjustment_left(drone, 0.2)
+                adjustment_right(drone, 0.2)
                 time.sleep(2)
 
 
