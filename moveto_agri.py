@@ -56,7 +56,6 @@ def forward(drone, F):
     assert drone(
         extended_move_by(F, 0, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
-    time.sleep(2)
 
 # 毎秒0.2mでXm右に移動
 def adjustment_left(drone, X):
@@ -127,43 +126,44 @@ def frame_processing(frame):
         list_ids.sort()
         print(list_ids)
 
+        index = np.where(ids == 0)[0][0]  # num_id が格納されているindexを抽出
+        cornerUL = corners[index][0][0]
+        cornerUR = corners[index][0][1]
+        cornerBR = corners[index][0][2]
+        cornerBL = corners[index][0][3]
+
+        center = [(cornerUL[0] + cornerBR[0]) / 2, (cornerUL[1] + cornerBR[1]) / 2]  # マーカー中心の計算
+
+        # print('左上 : {}'.format(cornerUL))
+        # print('右上 : {}'.format(cornerUR))
+        # print('右下 : {}'.format(cornerBR))
+        # print('左下 : {}'.format(cornerBL))
+        #print('中心 : {}'.format(center))
+
         # マーカーが見つかるまで前進
-        forward(drone, 0.4)
-        time.sleep(0.05)
-        if list_ids[0] == 0:
+        if list_ids is None and center[1] < 400:
             print("*********************************************************************")
             print("***************************landing_posture***************************")
             print("*********************************************************************")
-
-            index = np.where(ids == 0)[0][0]  # num_id が格納されているindexを抽出
-            cornerUL = corners[index][0][0]
-            cornerUR = corners[index][0][1]
-            cornerBR = corners[index][0][2]
-            cornerBL = corners[index][0][3]
-
-            center = [(cornerUL[0] + cornerBR[0]) / 2, (cornerUL[1] + cornerBR[1]) / 2] # マーカー中心の計算
-
-            # print('左上 : {}'.format(cornerUL))
-            # print('右上 : {}'.format(cornerUR))
-            # print('右下 : {}'.format(cornerBR))
-            # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
+            forward(drone, 0.3)
+            time.sleep(2)
 
-            if center[1] >= 400 and 550 < center[0] < 650:
-                print("*********************************************************************")
-                print("*********************************landing*****************************")
-                print("*********************************************************************")
-                print('中心 : {}'.format(center))
-                target_found = True
-            # 横方向微調整
-            elif center[0] < 550:
-                print('中心 : {}'.format(center))
-                adjustment_left(drone, 0.2)
-                time.sleep(2)
-            elif center[0] > 650:
-                print('中心 : {}'.format(center))
-                adjustment_right(drone, 0.2)
-                time.sleep(2)
+        if center[1] >= 400 and 550 < center[0] < 650:
+            print("*********************************************************************")
+            print("*********************************landing*****************************")
+            print("*********************************************************************")
+            print('中心 : {}'.format(center))
+            target_found = True
+        # 横方向微調整
+        elif center[0] < 550:
+            print('中心 : {}'.format(center))
+            adjustment_left(drone, 0.2)
+            time.sleep(2)
+        elif center[0] > 650:
+            print('中心 : {}'.format(center))
+            adjustment_right(drone, 0.2)
+            time.sleep(2)
 
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
