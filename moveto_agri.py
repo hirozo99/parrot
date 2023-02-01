@@ -92,7 +92,7 @@ def moveto(drone, latitude, longitude):
     print("------------------------------------------------------------------")
     print("------------------------------moveto------------------------------")
     print("------------------------------------------------------------------")
-    drone(
+    assert drone(
         extended_move_to(latitude, longitude, 5.0, 0, 0.0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
@@ -201,7 +201,7 @@ if __name__ == '__main__':
     gain_altitude(drone, 4)
     time.sleep(1)
     moveto(drone, agri_latitude, agri_longitude)
-    time.sleep(15)
+    time.sleep(13)
     start_processing = True
     try:
         while True:
