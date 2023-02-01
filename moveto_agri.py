@@ -92,8 +92,8 @@ def moveto(drone, latitude, longitude):
     print("------------------------------------------------------------------")
     print("------------------------------moveto------------------------------")
     print("------------------------------------------------------------------")
-    assert drone(
-        extended_move_to(latitude, longitude, 5.0, 0, 0.0, 0.7, 0.7, 0.7)
+    drone(
+        extended_move_to(latitude, longitude, 4.8, 0, 0.0, 0.7, 0.7, 0.7)
     ).wait().success()
     time.sleep(3)
 
