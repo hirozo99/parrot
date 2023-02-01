@@ -148,18 +148,18 @@ def frame_processing(frame):
             # print('左下 : {}'.format(cornerBL))
             print('中心 : {}'.format(center))
 
-            if center[1] >= 400 and 570 < center[0] < 630:
+            if center[1] >= 400 and 550 < center[0] < 650:
                 print("*********************************************************************")
                 print("*********************************landing*****************************")
                 print("*********************************************************************")
                 print('中心 : {}'.format(center))
                 target_found = True
             # 横方向微調整
-            elif center[0] < 580:
+            elif center[0] < 550:
                 print('中心 : {}'.format(center))
                 adjustment_right(drone, 0.2)
                 time.sleep(2)
-            elif center[0] > 620:
+            elif center[0] > 650:
                 print('中心 : {}'.format(center))
                 adjustment_left(drone, 0.2)
                 time.sleep(2)
@@ -196,7 +196,7 @@ if __name__ == '__main__':
     gain_altitude(drone, 4)
     time.sleep(1)
     moveto(drone, agri_latitude, agri_longitude)
-    time.sleep(20)
+    time.sleep(15)
     start_processing = True
     try:
         while True:
