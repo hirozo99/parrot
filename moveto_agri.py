@@ -57,7 +57,7 @@ def forward(drone, F):
         extended_move_by(F, 0, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
 
-# 毎秒0.2mでXm右に移動
+# 毎秒0.2mでXm左に移動
 def adjustment_left(drone, X):
     print("----------------------------------------------------------------------------")
     print("------------------------------adjustment_left------------------------------")
@@ -66,7 +66,7 @@ def adjustment_left(drone, X):
         extended_move_by(0, -X, 0, 0, 0.2, 0.2, 0.2)
     ).wait().success()
 
-# 毎秒0.2mでXm左に移動
+# 毎秒0.2mでXm右に移動
 def adjustment_right(drone, X):
     print("---------------------------------------------------------------------------")
     print("------------------------------adjustment_right------------------------------")
